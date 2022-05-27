@@ -12,6 +12,9 @@ export function App() {
 	const [filter, setFilter] = useState<string>("");
 	const [debouncedFilter, setDebouncedFilter] = useState(filter);
 	const [path, setPath] = useState<string[]>([]);
+	const [selectedLanguage, setSelectedLanguage] = useState<string | null>(
+		null
+	);
 	const locs = useLocs(path, {
 		sortOrder,
 		filter: debouncedFilter || undefined,
@@ -47,9 +50,14 @@ export function App() {
 				<div className="grid grid-cols-1 gap-4 items-start sm:grid-cols-2">
 					<FileTree
 						locs={locs}
+						selectedLanguage={selectedLanguage}
 						onSelectDir={name => setPath(prev => [...prev, name])}
 					/>
-					<LocsTree locs={locs} />
+					<LocsTree
+						locs={locs}
+						selectedLanguage={selectedLanguage}
+						onSelectLanguage={setSelectedLanguage}
+					/>
 				</div>
 			)}
 		</div>

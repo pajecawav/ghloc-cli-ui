@@ -3,13 +3,19 @@ import { cn } from "../utils";
 
 interface LocsTreeProps {
 	locs: Locs;
+	selectedLanguage: string | null;
+	onSelectLanguage: (lang: string | null) => void;
 }
 
 function renderLoc(loc: number, total: number): string {
 	return `${loc} (${((100 * loc) / total).toFixed(2)}%)`;
 }
 
-export function LocsTree({ locs }: LocsTreeProps) {
+export function LocsTree({
+	locs,
+	selectedLanguage,
+	onSelectLanguage,
+}: LocsTreeProps) {
 	const totalLocs = Object.values(locs.locByLangs).reduce(
 		(sum, loc) => sum + loc,
 		0
@@ -30,11 +36,23 @@ export function LocsTree({ locs }: LocsTreeProps) {
 				)}
 			>
 				{entries.map(([name, loc]) => (
-					<li className="flex gap-2 px-2 py-1">
-						<span className="truncate">{name}</span>
-						<span className="ml-auto whitespace-nowrap">
-							{renderLoc(loc, totalLocs)}
-						</span>
+					<li>
+						<button
+							className={cn(
+								"w-full flex gap-2 px-2 py-1 hover:bg-sky-100",
+								selectedLanguage === name && "bg-sky-100"
+							)}
+							onClick={() =>
+								onSelectLanguage(
+									selectedLanguage === name ? null : name
+								)
+							}
+						>
+							<span className="truncate">{name}</span>
+							<span className="ml-auto whitespace-nowrap">
+								{renderLoc(loc, totalLocs)}
+							</span>
+						</button>
 					</li>
 				))}
 			</ul>

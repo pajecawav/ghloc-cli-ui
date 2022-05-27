@@ -1,12 +1,13 @@
 import { useMemo } from "preact/hooks";
 import { DocumentIcon } from "../icons/DocumentIcon";
 import { FolderIcon } from "../icons/FolderIcon";
-import { Locs } from "../types";
+import { Locs, LocsChild } from "../types";
 import { cn, getLocsValue, isFolder } from "../utils";
 
 interface FileTreeProps {
 	locs: Locs;
 	onSelectDir: (name: string) => void;
+	selectedLanguage: string | null;
 }
 
 function renderLoc(loc: number, total: number): string {
@@ -18,7 +19,17 @@ function renderIcon(isFolder: boolean) {
 	return <Icon className={cn("w-5 h-5", isFolder && "fill-blue-300")} />;
 }
 
-export function FileTree({ locs, onSelectDir }: FileTreeProps) {
+function getStyleForSelectedLanguage(percentage: number) {
+	return {
+		backgroundSize: `${percentage}%`,
+	};
+}
+
+export function FileTree({
+	locs,
+	onSelectDir,
+	selectedLanguage,
+}: FileTreeProps) {
 	const totalLocs = useMemo(
 		() =>
 			Object.values(locs.children ?? {}).reduce<number>(
@@ -27,6 +38,26 @@ export function FileTree({ locs, onSelectDir }: FileTreeProps) {
 			),
 		[locs]
 	);
+
+	const totalLocsOfSelectedLanguage = selectedLanguage
+		? locs.locByLangs[selectedLanguage] || 0
+		: 0;
+	const getLocsPercentageOfSelectedLanguage = (
+		name: string,
+		node: LocsChild
+	) => {
+		if (!selectedLanguage || !totalLocsOfSelectedLanguage) return 0;
+
+		if (!isFolder(node)) {
+			return name.endsWith(selectedLanguage)
+				? (node / totalLocsOfSelectedLanguage) * 100
+				: 0;
+		}
+		return (
+			(node.locByLangs[selectedLanguage] / totalLocsOfSelectedLanguage) *
+				100 || 0
+		);
+	};
 
 	const entries = Object.entries(locs.children ?? {});
 
@@ -41,10 +72,16 @@ export function FileTree({ locs, onSelectDir }: FileTreeProps) {
 				)}
 			>
 				{entries.map(([name, child]) => (
-					<li>
+					<li
+						className="bg-gradient-to-r from-sky-100 to-sky-100 bg-no-repeat transition-all duration-[0.4s]"
+						style={getStyleForSelectedLanguage(
+							getLocsPercentageOfSelectedLanguage(name, child)
+						)}
+						key={name}
+					>
 						<button
 							onClick={() => onSelectDir(name)}
-							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-slate-100 disabled:bg-transparent"
+							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-sky-100 disabled:bg-transparent"
 							disabled={!isFolder(child)}
 						>
 							<span>{renderIcon(isFolder(child))}</span>
