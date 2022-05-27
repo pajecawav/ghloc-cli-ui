@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
-import { Locs } from "../types";
+import { Locs, LocsChild } from "../types";
 import { isFolder } from "../utils";
+
+export type SortOrder = "type" | "locs";
 
 const GHLOC_URL_BASE = "http://localhost:8080";
 
 const EMPTY_LOCS: Locs = { loc: 0, locByLangs: {} };
 
-export function useLocs(path: string[]) {
+export function useLocs(path: string[], sortOrder: SortOrder = "type") {
 	const [locs, setLocs] = useState<Locs | null>(null);
 
 	useEffect(() => {
@@ -36,5 +38,41 @@ export function useLocs(path: string[]) {
 		return pathLocs;
 	}, [locs, path]);
 
-	return pathLocs;
+	const sortedLocs = useMemo((): Locs | null => {
+		if (!pathLocs) return pathLocs;
+
+		const children = pathLocs.children;
+		if (!children) {
+			return pathLocs;
+		}
+
+		if (sortOrder === "locs") {
+			return pathLocs;
+		}
+
+		const names = Object.keys(children);
+
+		names.sort((nameA, nameB) => {
+			const a = children[nameA] as Locs;
+			const b = children[nameB] as Locs;
+
+			const isFolderA = isFolder(a);
+			const isFolderB = isFolder(b);
+
+			if (isFolderA !== isFolderB) {
+				return Number(isFolderB) - Number(isFolderA);
+			}
+
+			return nameA < nameB ? -1 : 1;
+		});
+
+		const sortedChildren: Record<string, LocsChild> = {};
+		for (const name of names) {
+			sortedChildren[name] = children[name];
+		}
+
+		return { ...pathLocs, children: sortedChildren };
+	}, [pathLocs, sortOrder]);
+
+	return sortedLocs;
 }

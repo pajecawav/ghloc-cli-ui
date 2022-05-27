@@ -29,7 +29,7 @@ export function Breadcrumb({ path, onChangeDir }: BreadcrumbProps) {
 	}
 
 	return (
-		<div className="flex gap-1">
+		<div className="break-all">
 			<BreadcrumbNode
 				name="root"
 				onClick={() => changeDir(0)}
@@ -38,7 +38,7 @@ export function Breadcrumb({ path, onChangeDir }: BreadcrumbProps) {
 
 			{path.map((value, index) => (
 				<Fragment key={index}>
-					<span>/</span>
+					<span> / </span>
 					<BreadcrumbNode
 						name={value}
 						onClick={() => changeDir(index + 1)}
