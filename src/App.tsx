@@ -10,12 +10,12 @@ export function App() {
 	const [path, setPath] = useState<string[]>(["pajecawav", "pockly", "test"]);
 
 	return (
-		<div className="max-w-2xl mx-auto px-2 mt-2 flex flex-col gap-2">
+		<div className="max-w-2xl mx-auto p-2 flex flex-col gap-2">
 			<Breadcrumb path={path} />
 			{!locs ? (
 				<div>Loading...</div>
 			) : (
-				<div className="grid grid-cols-1 gap-4 items-start md:grid-cols-2">
+				<div className="grid grid-cols-1 gap-4 items-start sm:grid-cols-2">
 					<FileTree locs={locs} />
 					<LocsTree locs={locs} />
 				</div>

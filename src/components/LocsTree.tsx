@@ -30,8 +30,8 @@ export function LocsTree({ locs }: LocsTreeProps) {
 				)}
 			>
 				{entries.map(([name, loc]) => (
-					<li className="flex gap-2 px-2 py-1 truncate">
-						<span>{name}</span>
+					<li className="flex gap-2 px-2 py-1">
+						<span className="truncate">{name}</span>
 						<span className="ml-auto whitespace-nowrap">
 							{renderLoc(loc, totalLocs)}
 						</span>
