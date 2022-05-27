@@ -8,14 +8,26 @@ const GHLOC_URL_BASE = "http://localhost:8080";
 
 const EMPTY_LOCS: Locs = { loc: 0, locByLangs: {} };
 
-export function useLocs(path: string[], sortOrder: SortOrder = "type") {
+export interface UseLocsOptions {
+	sortOrder?: SortOrder;
+	filter?: string;
+}
+
+export function useLocs(
+	path: string[],
+	{ sortOrder = "type", filter }: UseLocsOptions
+) {
 	const [locs, setLocs] = useState<Locs | null>(null);
 
 	useEffect(() => {
-		fetch(`${GHLOC_URL_BASE}/pajecawav/pockly/master`)
+		// TODO: abort fetch
+		const url = new window.URL(`${GHLOC_URL_BASE}/pajecawav/pockly/master`);
+		if (filter) url.searchParams.append("match", filter);
+
+		fetch(url.toString())
 			.then(response => response.json())
 			.then(json => setLocs(json));
-	}, []);
+	}, [filter]);
 
 	const pathLocs = useMemo(() => {
 		if (!locs) return locs;
