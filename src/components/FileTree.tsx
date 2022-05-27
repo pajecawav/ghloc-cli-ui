@@ -1,4 +1,6 @@
 import { useMemo } from "preact/hooks";
+import { DocumentIcon } from "../icons/DocumentIcon";
+import { FolderIcon } from "../icons/FolderIcon";
 import { Locs } from "../types";
 import { cn, getLocsValue, isFolder } from "../utils";
 
@@ -9,6 +11,11 @@ interface FileTreeProps {
 
 function renderLoc(loc: number, total: number): string {
 	return `${loc} (${((100 * loc) / total).toFixed(2)}%)`;
+}
+
+function renderIcon(isFolder: boolean) {
+	const Icon = isFolder ? FolderIcon : DocumentIcon;
+	return <Icon className={cn("w-5 h-5", isFolder && "fill-blue-300")} />;
 }
 
 export function FileTree({ locs, onSelectDir }: FileTreeProps) {
@@ -37,9 +44,10 @@ export function FileTree({ locs, onSelectDir }: FileTreeProps) {
 					<li>
 						<button
 							onClick={() => onSelectDir(name)}
-							className="w-full flex gap-2 px-2 py-1 hover:bg-slate-100 disabled:bg-transparent"
+							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-slate-100 disabled:bg-transparent"
 							disabled={!isFolder(child)}
 						>
+							<span>{renderIcon(isFolder(child))}</span>
 							<span className="truncate">{name}</span>
 							<span className="ml-auto whitespace-nowrap">
 								{renderLoc(getLocsValue(child), totalLocs)}

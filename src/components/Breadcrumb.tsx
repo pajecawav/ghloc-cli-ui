@@ -40,7 +40,7 @@ export function Breadcrumb({ path, onChangeDir }: BreadcrumbProps) {
 				<Fragment key={index}>
 					<span>/</span>
 					<BreadcrumbNode
-						name="value"
+						name={value}
 						onClick={() => changeDir(index + 1)}
 						disabled={index === path.length - 1}
 					/>
