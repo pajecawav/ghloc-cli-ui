@@ -1,5 +1,5 @@
 {
-	"name": "ghloc-cli",
+	"name": "ghloc-cli-ui",
 	"private": true,
 	"version": "0.0.0",
 	"scripts": {
