@@ -1,16 +1,17 @@
 import { useMemo } from "preact/hooks";
 import { Locs } from "../types";
-import { cn, getLocsValue } from "../utils";
+import { cn, getLocsValue, isFolder } from "../utils";
 
 interface FileTreeProps {
 	locs: Locs;
+	onSelectDir: (name: string) => void;
 }
 
 function renderLoc(loc: number, total: number): string {
 	return `${loc} (${((100 * loc) / total).toFixed(2)}%)`;
 }
 
-export function FileTree({ locs }: FileTreeProps) {
+export function FileTree({ locs, onSelectDir }: FileTreeProps) {
 	const totalLocs = useMemo(
 		() =>
 			Object.values(locs.children ?? {}).reduce<number>(
@@ -33,11 +34,17 @@ export function FileTree({ locs }: FileTreeProps) {
 				)}
 			>
 				{entries.map(([name, child]) => (
-					<li className="flex gap-2 px-2 py-1">
-						<span className="truncate">{name}</span>
-						<span className="ml-auto whitespace-nowrap">
-							{renderLoc(getLocsValue(child), totalLocs)}
-						</span>
+					<li>
+						<button
+							onClick={() => onSelectDir(name)}
+							className="w-full flex gap-2 px-2 py-1 hover:bg-slate-100 disabled:bg-transparent"
+							disabled={!isFolder(child)}
+						>
+							<span className="truncate">{name}</span>
+							<span className="ml-auto whitespace-nowrap">
+								{renderLoc(getLocsValue(child), totalLocs)}
+							</span>
+						</button>
 					</li>
 				))}
 			</ul>

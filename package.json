@@ -9,8 +9,7 @@
 		"lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'"
 	},
 	"dependencies": {
-		"preact": "^10.5.15",
-		"preact-router": "^4.0.1"
+		"preact": "^10.5.15"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.1.5",
