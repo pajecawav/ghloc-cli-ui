@@ -20,13 +20,16 @@ export function useLocs(
 	const [locs, setLocs] = useState<Locs | null>(null);
 
 	useEffect(() => {
-		// TODO: abort fetch
+		const abortController = new AbortController();
+
 		const url = new window.URL(`${GHLOC_URL_BASE}/pajecawav/pockly/master`);
 		if (filter) url.searchParams.append("match", filter);
 
-		fetch(url.toString())
+		fetch(url.toString(), { signal: abortController.signal })
 			.then(response => response.json())
 			.then(json => setLocs(json));
+
+		return () => abortController.abort();
 	}, [filter]);
 
 	const pathLocs = useMemo(() => {
