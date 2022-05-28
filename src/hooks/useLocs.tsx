@@ -4,8 +4,6 @@ import { isFolder } from "../utils";
 
 export type SortOrder = "type" | "locs";
 
-const GHLOC_URL_BASE = "http://localhost:8080";
-
 const EMPTY_LOCS: Locs = { loc: 0, locByLangs: {} };
 
 export interface UseLocsOptions {
@@ -22,7 +20,7 @@ export function useLocs(
 	useEffect(() => {
 		const abortController = new AbortController();
 
-		const url = new window.URL(`${GHLOC_URL_BASE}/pajecawav/pockly/master`);
+		const url = new window.URL(`${window.location.origin}/api`);
 		if (filter) url.searchParams.append("match", filter);
 
 		fetch(url.toString(), { signal: abortController.signal })
