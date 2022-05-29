@@ -3,7 +3,7 @@ import { useEffect, useRef } from "preact/hooks";
 export function useDebounce(
 	cb: () => void,
 	ms: number | null,
-	dependencies: any[]
+	dependencies: unknown[] = []
 ) {
 	const cbRef = useRef(cb);
 	const timeoutIdRef = useRef<number | undefined>(undefined);
@@ -20,5 +20,6 @@ export function useDebounce(
 			timeoutIdRef.current = setTimeout(() => cbRef.current(), ms);
 			return () => clearTimeout(timeoutIdRef.current);
 		}
-	}, [...dependencies]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ms, ...dependencies]);
 }

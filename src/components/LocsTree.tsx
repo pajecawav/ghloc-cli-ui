@@ -36,7 +36,7 @@ export function LocsTree({
 				)}
 			>
 				{entries.map(([name, loc]) => (
-					<li>
+					<li key={name}>
 						<button
 							className={cn(
 								"w-full flex gap-2 px-2 py-1 hover:bg-sky-100 dark:hover:bg-sky-100/10",
