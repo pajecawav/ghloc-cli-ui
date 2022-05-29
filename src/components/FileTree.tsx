@@ -16,7 +16,14 @@ function renderLoc(loc: number, total: number): string {
 
 function renderIcon(isFolder: boolean) {
 	const Icon = isFolder ? FolderIcon : DocumentIcon;
-	return <Icon className={cn("w-5 h-5", isFolder && "fill-blue-300")} />;
+	return (
+		<Icon
+			className={cn(
+				"w-5 h-5 dark:text-neutral-400",
+				isFolder && "fill-blue-300"
+			)}
+		/>
+	);
 }
 
 function getStyleForSelectedLanguage(percentage: number) {
@@ -67,13 +74,13 @@ export function FileTree({
 
 			<ul
 				className={cn(
-					"rounded-lg border divide-y",
+					"rounded-lg border divide-y dark:border-neutral-700 dark:divide-neutral-700",
 					entries.length === 0 && "h-40"
 				)}
 			>
 				{entries.map(([name, child]) => (
 					<li
-						className="bg-gradient-to-r from-sky-100 to-sky-100 bg-no-repeat transition-all duration-[0.4s]"
+						className="bg-gradient-to-r from-sky-100 to-sky-100 bg-no-repeat transition-[background-size] duration-[0.4s] dark:from-sky-100/10 dark:to-sky-100/10"
 						style={getStyleForSelectedLanguage(
 							getLocsPercentageOfSelectedLanguage(name, child)
 						)}
@@ -81,7 +88,7 @@ export function FileTree({
 					>
 						<button
 							onClick={() => onSelectDir(name)}
-							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-sky-100 disabled:bg-transparent"
+							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-sky-100 disabled:bg-transparent dark:hover:bg-sky-100/10"
 							disabled={!isFolder(child)}
 						>
 							<span>{renderIcon(isFolder(child))}</span>

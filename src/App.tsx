@@ -37,6 +37,7 @@ export function App() {
 						<option value="locs">Locs</option>
 					</Select>
 					<Input
+						className="w-40"
 						size={1}
 						placeholder="Filter"
 						onInput={e => setFilter(e.currentTarget.value)}

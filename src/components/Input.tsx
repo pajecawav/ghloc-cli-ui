@@ -1,7 +1,16 @@
 import { ComponentProps } from "preact";
+import { cn } from "../utils";
 
-export type InputProps = Omit<ComponentProps<"input">, "className">;
+export type InputProps = ComponentProps<"input">;
 
-export function Input(props: InputProps) {
-	return <input className="border px-4 py-1 rounded-md w-40" {...props} />;
+export function Input({ className, ...props }: InputProps) {
+	return (
+		<input
+			className={cn(
+				"px-4 py-1 rounded-md bg-transparent border dark:border-neutral-700",
+				className
+			)}
+			{...props}
+		/>
+	);
 }

@@ -14,7 +14,7 @@ interface BreadcrumbNodeProps {
 function BreadcrumbNode({ name, onClick, disabled }: BreadcrumbNodeProps) {
 	return (
 		<button
-			className="text-blue-500 hover:underline disabled:text-inherit disabled:hover:no-underline"
+			className="text-blue-500 hover:underline disabled:text-inherit disabled:hover:no-underline dark:text-blue-400"
 			onClick={onClick}
 			disabled={disabled}
 		>

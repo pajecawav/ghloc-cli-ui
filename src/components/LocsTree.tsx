@@ -31,7 +31,7 @@ export function LocsTree({
 
 			<ul
 				className={cn(
-					"rounded-lg border divide-y",
+					"rounded-lg border divide-y dark:border-neutral-700 dark:divide-neutral-700",
 					entries.length === 0 && "h-40"
 				)}
 			>
@@ -39,8 +39,9 @@ export function LocsTree({
 					<li>
 						<button
 							className={cn(
-								"w-full flex gap-2 px-2 py-1 hover:bg-sky-100",
-								selectedLanguage === name && "bg-sky-100"
+								"w-full flex gap-2 px-2 py-1 hover:bg-sky-100 dark:hover:bg-sky-100/10",
+								selectedLanguage === name &&
+									"bg-sky-100 dark:bg-sky-100/10"
 							)}
 							onClick={() =>
 								onSelectLanguage(
