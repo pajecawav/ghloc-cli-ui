@@ -1,5 +1,3 @@
-import { Fragment } from "preact";
-
 export interface BreadcrumbProps {
 	path: string[];
 	onChangeDir: (path: string[]) => void;
@@ -13,13 +11,15 @@ interface BreadcrumbNodeProps {
 
 function BreadcrumbNode({ name, onClick, disabled }: BreadcrumbNodeProps) {
 	return (
-		<button
-			className="text-blue-500 hover:underline disabled:text-inherit disabled:hover:no-underline dark:text-blue-400"
-			onClick={onClick}
-			disabled={disabled}
-		>
-			{name}
-		</button>
+		<li className="inline before:content-['/'] before:mx-1.5 before:text-gray-500 first:before:hidden">
+			<button
+				className="text-blue-500 hover:underline disabled:text-inherit disabled:hover:no-underline dark:text-blue-400"
+				onClick={onClick}
+				disabled={disabled}
+			>
+				{name}
+			</button>
+		</li>
 	);
 }
 
@@ -28,24 +28,18 @@ export function Breadcrumb({ path, onChangeDir }: BreadcrumbProps) {
 		onChangeDir(path.slice(0, index));
 	}
 
-	return (
-		<div className="break-all">
-			<BreadcrumbNode
-				name="root"
-				onClick={() => changeDir(0)}
-				disabled={path.length === 0}
-			/>
+	path = ["root", ...path];
 
+	return (
+		<ul className="break-all">
 			{path.map((value, index) => (
-				<Fragment key={index}>
-					<span> / </span>
-					<BreadcrumbNode
-						name={value}
-						onClick={() => changeDir(index + 1)}
-						disabled={index === path.length - 1}
-					/>
-				</Fragment>
+				<BreadcrumbNode
+					name={value}
+					onClick={() => changeDir(index)}
+					disabled={index === path.length - 1}
+					key={index}
+				/>
 			))}
-		</div>
+		</ul>
 	);
 }
