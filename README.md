@@ -6,12 +6,12 @@
 
 ## Development
 
--   Install dependencies `yarn install`
--   Start development server `yarn dev`
+-   Install dependencies `pnpm install`
+-   Start development server `pnpm dev`
 -   Navigate to http://localhost:3000
 
 ## Build
 
--   Build project `yarn build`
--   Start preview server `yarn preview`
+-   Build project `pnpm build`
+-   Start preview server `pnpm preview`
 -   Navigate to http://localhost:4173

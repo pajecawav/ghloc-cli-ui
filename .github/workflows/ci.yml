@@ -13,24 +13,24 @@ jobs:
         steps:
             - uses: actions/checkout@v3
 
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 7
+
             - name: Setup Node
               uses: actions/setup-node@v3
               with:
                   node-version: 16
-                  cache: yarn
-                  cache-dependency-path: ./yarn.lock
+                  cache: pnpm
 
             - name: Install dependencies
-              run: yarn install --frozen-lockfile
+              run: pnpm install --frozen-lockfile
 
             - name: Check formatting
-              run: yarn format:check
-
-            - name: Typecheck
-              run: yarn typecheck
+              run: pnpm format:check
 
             - name: Lint
-              run: yarn lint
+              run: pnpm lint
 
             - name: Build
-              run: yarn lint
+              run: pnpm build
