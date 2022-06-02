@@ -25,7 +25,7 @@ function BreadcrumbNode({ name, onClick, disabled }: BreadcrumbNodeProps) {
 
 export function Breadcrumb({ path, onChangeDir }: BreadcrumbProps) {
 	function changeDir(index: number) {
-		onChangeDir(path.slice(0, index));
+		onChangeDir(path.slice(1, index + 1));
 	}
 
 	path = ["root", ...path];
