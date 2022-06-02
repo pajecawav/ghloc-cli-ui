@@ -8,6 +8,7 @@
 		"preview": "vite preview",
 		"lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
 		"format": "prettier --write --ignore-path '.gitignore' './**/*.{js,jsx,ts,tsx,css,json,md,yml}'",
+		"format:check": "prettier --list-different --ignore-path '.gitignore' './**/*.{js,jsx,ts,tsx,css,json,md,yml}'",
 		"typecheck": "tsc --noEmit",
 		"prepare": "is-ci || husky install"
 	},
