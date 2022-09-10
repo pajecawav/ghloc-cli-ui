@@ -10,7 +10,7 @@ export default defineConfig({
 				// use hard-coded url for ghloc server in dev
 				target: "http://localhost:8080/pajecawav/ghloc-cli-ui/master",
 				rewrite: path => {
-					const url = new URL(path, "http://localhost:3000");
+					const url = new URL(path, "http://localhost:5173");
 					return url.search;
 				},
 			},
