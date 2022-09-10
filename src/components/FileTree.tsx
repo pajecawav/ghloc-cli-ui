@@ -90,6 +90,7 @@ export function FileTree({
 							onClick={() => onSelectDir(name)}
 							className="w-full flex gap-2 items-center px-2 py-1 hover:bg-sky-100 disabled:bg-transparent dark:hover:bg-sky-100/10"
 							disabled={!isFolder(child)}
+							title={name}
 						>
 							<span>{renderIcon(isFolder(child))}</span>
 							<span className="truncate">{name}</span>
